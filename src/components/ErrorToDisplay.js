@@ -4,7 +4,8 @@ function Error({ errorMsg, errorCode }) {
   return (
     <div>
       <Alert className="mt-4" variant={"danger"}>
-        Code: {errorCode} : {errorMsg}
+        {/* Code: {errorCode}  : */}
+        {errorMsg}
       </Alert>
     </div>
   );

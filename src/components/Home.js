@@ -1,4 +1,6 @@
 import { Col, Container, Row } from "react-bootstrap";
+import Logo from "../images/mixerProLogo.jpg";
+import RandomSong from "./RandomSong";
 
 function Home() {
   return (
@@ -7,23 +9,17 @@ function Home() {
         <Row className="rows">
           <Col xs={2} className="columns"></Col>
           <Col className="columns">
-            <h1 className="text-center mt-3">MixerPro</h1>
+            <img
+              src={Logo}
+              alt="Logo"
+              className="mt-3 rounded-circle resize mx-auto d-block"
+            />
             <br></br>
-            <h3>
-              <strong>Functionalities</strong>
+            <h3 className="text-center">
+              Music based on <strong>your</strong> liking
             </h3>
-            <p>
-              <strong>No Login</strong>: Home, FetchSingle and Login
-            </p>
-            <p>
-              <strong>User</strong> : Home, FetchSingle, FetchSequentially and
-              Logout
-            </p>
-            <p>
-              <strong>Admin</strong>: Home, FetchSingle, FetchParallel and
-              Logout
-            </p>
-            <br></br>
+
+            <RandomSong />
           </Col>
           <Col xs={2} className="columns"></Col>
         </Row>

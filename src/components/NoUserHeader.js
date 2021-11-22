@@ -14,7 +14,8 @@ import Home from "./Home";
 import Header from "./Header";
 import FetchSingle from "./FetchSingle";
 import NoMatch from "./NoMatch";
-import Button from "@restart/ui/esm/Button";
+import ErrorToDisplay from "./ErrorToDisplay";
+import Logo from "../images/mixerProLogo.jpg";
 
 function NoUserHeader(props) {
   const { login, loggedIn, errorMsg } = props;
@@ -37,12 +38,14 @@ function NoUserHeader(props) {
   return (
     <div>
       {/* <Header loggedIn={loggedIn} /> */}
+
       <Switch>
         <Route exact path="/">
           <Container>
             <Row className="rows">
               <Col sm={5} className="columns main-left">
                 <h1 className="text-center mt-3">MixerPro</h1>
+                <img src={Logo} alt="Logo" />
                 <p>Login and share music </p>
               </Col>
               <Col className="columns login-form">
@@ -68,7 +71,7 @@ function NoUserHeader(props) {
                   >
                     Login
                   </button>
-                  <p>{errorMsg}</p>
+                  {errorMsg ? <ErrorToDisplay errorMsg={errorMsg} /> : ""}
                 </Form>
               </Col>
               <Col xs={2} className="columns"></Col>
