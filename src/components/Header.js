@@ -4,25 +4,26 @@ function Header({ loggedIn, logout, validateAccess }) {
   return (
     <ul className="header">
       {console.log(loggedIn)}
-      <li>
-        <NavLink exact activeClassName="active" to="/">
-          Home
-        </NavLink>
-      </li>
 
-      <li>
+      {/* <li>
         <NavLink exact activeClassName="active" to="/fetch-single">
           FetchSingle
         </NavLink>
-      </li>
+      </li> */}
       {!loggedIn ? (
         <li>
-          <NavLink exact activeClassName="active" to="/login">
+          <NavLink exact activeClassName="active" to="/">
             Login
           </NavLink>
         </li>
       ) : (
         <>
+          <li>
+            <NavLink exact activeClassName="active" to="/">
+              Home
+            </NavLink>
+          </li>
+
           {validateAccess === "user" ? (
             <li>
               <NavLink exact activeClassName="active" to="/fetch-sequentially">

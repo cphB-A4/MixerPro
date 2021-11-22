@@ -7,12 +7,14 @@ import {
   NavLink,
   useHistory,
 } from "react-router-dom";
+import { Col, Container, Form, Row } from "react-bootstrap";
 
 import React, { useState, useEffect } from "react";
 import Home from "./Home";
 import Header from "./Header";
 import FetchSingle from "./FetchSingle";
 import NoMatch from "./NoMatch";
+import Button from "@restart/ui/esm/Button";
 
 function NoUserHeader(props) {
   const { login, loggedIn, errorMsg } = props;
@@ -34,26 +36,48 @@ function NoUserHeader(props) {
   };
   return (
     <div>
-      {console.log(errorMsg)}
-      <Header loggedIn={loggedIn} />
+      {/* <Header loggedIn={loggedIn} /> */}
       <Switch>
         <Route exact path="/">
-          <Home />
+          <Container>
+            <Row className="rows">
+              <Col sm={5} className="columns main-left">
+                <h1 className="text-center mt-3">MixerPro</h1>
+                <p>Login and share music </p>
+              </Col>
+              <Col className="columns login-form">
+                <Form onChange={onChange}>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control placeholder="Enter username" id="username" />
+                  </Form.Group>
+
+                  <Form.Group className="mb-3">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                      type="password"
+                      placeholder="Password"
+                      id="password"
+                    />
+                  </Form.Group>
+
+                  <button
+                    type="submit"
+                    class="btn btn-black"
+                    onClick={handleSubmit}
+                  >
+                    Login
+                  </button>
+                  <p>{errorMsg}</p>
+                </Form>
+              </Col>
+              <Col xs={2} className="columns"></Col>
+            </Row>
+          </Container>
         </Route>
-        <Route path="/login">
-          <div>
-            <h2>Login</h2>
-            <form onChange={onChange}>
-              <input placeholder="User Name" id="username" />
-              <input placeholder="Password" id="password" />
-              <button onClick={handleSubmit}>Login</button>
-            </form>
-            <p>{errorMsg}</p>
-          </div>
-        </Route>
-        <Route path="/fetch-single">
+        {/* <Route path="/fetch-single">
           <FetchSingle />
-        </Route>
+        </Route> */}
         <Route path="*">
           <NoMatch />
         </Route>
