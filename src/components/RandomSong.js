@@ -1,4 +1,8 @@
-function RandomSong() {
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+function RandomSong({ token }) {
+  const [tracks, setTracks] = useState({});
+
   function getRandomSearch() {
     // A list of all characters that can be chosen.
     const characters = "abcdefghijklmnopqrstuvwxyz";
@@ -9,25 +13,53 @@ function RandomSong() {
     );
     let randomSearch = "";
 
-    // Places the wildcard character at the beginning, or both beginning and end, randomly.
-    switch (Math.round(Math.random())) {
-      case 0:
+    
         randomSearch = randomCharacter + "%";
-        break;
-      case 1:
-        randomSearch = "%" + randomCharacter + "%";
-        break;
-      default:
-        randomSearch = 0;
-        break;
-    }
-    console.log(randomSearch);
+      
+    
+
     return randomSearch;
   }
 
+  const getRandomSong = (evt) => {
+    console.log(token);
+    const randomWildcard = getRandomSearch();
+    console.log(randomWildcard);
+    axios(
+      `https://api.spotify.com/v1/search?q=${randomWildcard}25&type=track`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      }
+    ).then((tracksResponse) => {
+      /*   setTracks({
+        selectedTrack: tracks.selectedTrack,
+        listOfTracksFromAPI: tracksResponse.data.items
+      })*/
+      console.log("song name: " + tracksResponse.data.tracks.items[0].name);
+      console.log("Artist name: " + tracksResponse.data.tracks.items[0].artists[0].name);
+      console.log(
+        "album cover img: " +
+          tracksResponse.data.tracks.items[0].album.images[0].url
+      );
+      console.log(
+        "link til spotify sang: " +
+          tracksResponse.data.tracks.items[0].external_urls.spotify
+      );
+
+     
+     // setTracks()
+      
+      console.log(tracksResponse);
+      //console.log(tracksResponse.data.name);
+    });
+  };
+
   return (
     <div>
-      <button onClick={getRandomSearch}>click me</button>
+      <button onClick={getRandomSong}>click me</button>
     </div>
   );
 }
