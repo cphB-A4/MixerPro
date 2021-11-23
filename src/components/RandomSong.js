@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import DisplaySongs from "./DisplaySongs";
 function RandomSong({ token }) {
-  const [tracks, setTracks] = useState({});
+  const [tracks, setTracks] = useState("");
 
   function getRandomSearch() {
     // A list of all characters that can be chosen.
@@ -38,28 +39,30 @@ function RandomSong({ token }) {
         selectedTrack: tracks.selectedTrack,
         listOfTracksFromAPI: tracksResponse.data.items
       })*/
-      console.log("song name: " + tracksResponse.data.tracks.items[0].name);
-      console.log("Artist name: " + tracksResponse.data.tracks.items[0].artists[0].name);
-      console.log(
-        "album cover img: " +
-          tracksResponse.data.tracks.items[0].album.images[0].url
-      );
-      console.log(
-        "link til spotify sang: " +
-          tracksResponse.data.tracks.items[0].external_urls.spotify
-      );
+    //   console.log("song name: " + tracksResponse.data.tracks.items[0].name);
+    //   console.log("Artist name: " + tracksResponse.data.tracks.items[0].artists[0].name);
+    //   console.log(
+    //     "album cover img: " +
+    //       tracksResponse.data.tracks.items[0].album.images[0].url
+    //   );
+    //   console.log(
+    //     "link til spotify sang: " +
+    //       tracksResponse.data.tracks.items[0].external_urls.spotify
+    //   );
 
+      setTracks(tracksResponse)
      
-     // setTracks()
+     
       
       console.log(tracksResponse);
-      //console.log(tracksResponse.data.name);
+    
     });
   };
 
   return (
     <div>
       <button onClick={getRandomSong}>click me</button>
+      {tracks!=="" ?<DisplaySongs tracks={tracks}/> : ""}
     </div>
   );
 }
