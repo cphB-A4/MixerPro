@@ -3,7 +3,7 @@ import { NavLink, Route } from "react-router-dom";
 function Header({ loggedIn, logout, validateAccess }) {
   return (
     <ul className="header">
-      {console.log(loggedIn)}
+     
 
       {/* <li>
         <NavLink exact activeClassName="active" to="/fetch-single">

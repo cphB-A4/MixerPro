@@ -19,24 +19,24 @@ import axios from "axios";
 
 function UserHeader(props) {
   const { loggedIn, logout, validateAccess } = props;
-  const [token, setToken] = useState("");
+  // const [token, setToken] = useState("");
 
-  useEffect(() => {
-    var clientId = process.env.REACT_APP_CLIENT_ID;
-    var clientSecret = process.env.REACT_APP_CLIENT_SECRET;
+  // useEffect(() => {
+  //   var clientId = process.env.REACT_APP_CLIENT_ID;
+  //   var clientSecret = process.env.REACT_APP_CLIENT_SECRET;
 
-    axios("https://accounts.spotify.com/api/token", {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        Authorization: "Basic " + btoa(clientId + ":" + clientSecret),
-      },
-      data: "grant_type=client_credentials",
-      method: "POST",
-    }).then((tokenResponse) => {
-      setToken(tokenResponse.data.access_token);
-      console.log(tokenResponse.data.access_token);
-    });
-  }, []);
+  //   axios("https://accounts.spotify.com/api/token", {
+  //     headers: {
+  //       "Content-Type": "application/x-www-form-urlencoded",
+  //       Authorization: "Basic " + btoa(clientId + ":" + clientSecret),
+  //     },
+  //     data: "grant_type=client_credentials",
+  //     method: "POST",
+  //   }).then((tokenResponse) => {
+  //     setToken(tokenResponse.data.access_token);
+  //     console.log(tokenResponse.data.access_token);
+  //   });
+  // }, []);
 
   return (
     <div>
@@ -47,7 +47,7 @@ function UserHeader(props) {
       />
       <Switch>
         <Route exact path="/">
-          <Home token={token} />
+          <Home/>
         </Route>
         <Route path="/fetch-single">
           <FetchSingle />

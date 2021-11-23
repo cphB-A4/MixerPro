@@ -32,7 +32,7 @@ function apiFacade() {
   const validateAccess = () => {
     var decoded = jwt_decode(getToken());
     const { roles } = decoded;
-    console.log(roles);
+    //console.log(roles);
     //  console.log(decoded);
     return roles;
   };

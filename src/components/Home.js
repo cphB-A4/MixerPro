@@ -2,7 +2,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import Logo from "../images/mixerProLogo.jpg";
 import RandomSong from "./RandomSong";
 
-function Home({token}) {
+function Home() {
   return (
     <div>
       <Container>
@@ -16,10 +16,10 @@ function Home({token}) {
             />
             <br></br>
             <h3 className="text-center">
-              Music based on <strong>your</strong> liking
+              Explore <strong>Music</strong>
             </h3>
 
-            <RandomSong token={token} />
+            <RandomSong />
           </Col>
           <Col xs={2} className="columns"></Col>
         </Row>

@@ -21,9 +21,9 @@ function RandomSong() {
        method: "POST",
      }).then((tokenResponse) => {
        setToken(tokenResponse.data.access_token);
-       console.log(tokenResponse.data.access_token);
+       //console.log(tokenResponse.data.access_token);
         const randomWildcard = getRandomSearch();
-        console.log(randomWildcard);
+        //console.log(randomWildcard);
         //fetch 20 random tracks
         axios(
           `https://api.spotify.com/v1/search?q=${randomWildcard}25&type=track`,
@@ -35,12 +35,12 @@ function RandomSong() {
           }
         ).then((tracksResponse) => {
           setTracks(tracksResponse);
-          console.log(tracksResponse);
+          //console.log(tracksResponse);
         });
      });
 
    }, []);
-   
+
   function getRandomSearch() {
     // A list of all characters that can be chosen.
     const characters = "abcdefghijklmnopqrstuvwxyz";

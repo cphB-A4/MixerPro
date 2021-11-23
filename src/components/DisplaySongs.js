@@ -3,18 +3,8 @@ import { Card, CardGroup } from "react-bootstrap";
 import { Col, Container, Row } from "react-bootstrap";
 
 function DisplaySongs({ tracks }) {
-  //   console.log("song name: " + tracks.data.tracks.items[0].name);
-  //   console.log("Artist name: " + tracks.data.tracks.items[0].artists[0].name);
-  //   console.log(
-  //     "album cover img: " + tracks.data.tracks.items[0].album.images[0].url
-  //   );
-  //   console.log(
-  //     "link til spotify sang: " +
-  //       tracks.data.tracks.items[0].external_urls.spotify
-  //   );
-
-  console.log(tracks);
-  console.log(tracks.data.tracks.items);
+  //console.log(tracks);
+  //console.log(tracks.data.tracks.items);
 
   return (
     <div>
@@ -22,25 +12,23 @@ function DisplaySongs({ tracks }) {
         <ul>
           {tracks.data.tracks.items.map((track, index) => (
             <>
-             
-                  <CardGroup>
-                    <Card>
-                      <Card.Body>
-                        <Card.Title>{track.name}</Card.Title>
-                        <Card.Text>{track.artists[0].name}</Card.Text>
-                      </Card.Body>
-                    </Card>
-                    <Card>
-                      <a href={track.external_urls.spotify}>
-                        <Card.Img
-                          variant="center"
-                          className="album-cover img-fluid "
-                          src={track.album.images[0].url}
-                        />
-                      </a>
-                    </Card>
-                  </CardGroup>
-               
+              <CardGroup>
+                <Card>
+                  <a href={track.external_urls.spotify}>
+                    <Card.Img
+                      variant="center"
+                      className="album-cover img-fluid "
+                      src={track.album.images[0].url}
+                    />
+                  </a>
+                </Card>
+                <Card>
+                  <Card.Body>
+                    <Card.Title>{track.name}</Card.Title>
+                    <Card.Text>{track.artists[0].name}</Card.Text>
+                  </Card.Body>
+                </Card>
+              </CardGroup>
             </>
             // <tr>
             //   <td>{track.name}</td>
