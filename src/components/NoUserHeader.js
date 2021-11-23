@@ -45,7 +45,7 @@ function NoUserHeader(props) {
             <Row className="rows">
               <Col sm={5} className="columns main-left">
                 <h1 className="text-center mt-3">MixerPro</h1>
-                <img src={Logo} alt="Logo" />
+                <img className="logo-mixerpro" src={Logo} alt="Logo" />
                 <p>Login and share music </p>
               </Col>
               <Col className="columns login-form">

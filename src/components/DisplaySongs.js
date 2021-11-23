@@ -10,16 +10,31 @@ function DisplaySongs({ tracks }) {
   //   );
 
   console.log(tracks);
-  console.log(tracks.data.tracks);
+  console.log(tracks.data.tracks.items);
 
   return (
     <div>
-      {/* { <ul>
-        {tracks.data.tracks.map((track) => (
-          <li key={track.name}>{track}</li>
-        ))}
-      </ul> } */}
+      {
+        <ul>
+          {tracks.data.tracks.items.map((track, index) => (
+            <tr>
+              <td>{track.name}</td>
+              <td>{track.artists[0].name}</td>
+              <td>
+                <a href={track.external_urls.spotify}>
+                  <img
+                    className="album-cover"
+                    alt="album cover"
+                    src={track.album.images[0].url}
+                  />
+                </a>
+              </td>
+            </tr>
+          ))}
+        </ul>
+      }
     </div>
+    
   );
 }
 
