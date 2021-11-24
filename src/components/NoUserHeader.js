@@ -12,7 +12,7 @@ import { Col, Container, Form, Row } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import Home from "./Home";
 import Header from "./Header";
-import FetchSingle from "./FetchSingle";
+import FetchSingle from "./ProfileSite";
 import NoMatch from "./NoMatch";
 import ErrorToDisplay from "./ErrorToDisplay";
 import Logo from "../images/mixerProLogo.jpg";

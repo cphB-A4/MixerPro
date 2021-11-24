@@ -26,8 +26,8 @@ function Header({ loggedIn, logout, validateAccess }) {
 
           {validateAccess === "user" ? (
             <li>
-              <NavLink exact activeClassName="active" to="/fetch-sequentially">
-                Fetch sequentially
+              <NavLink exact activeClassName="active" to="/profile-site">
+                Profile Site
               </NavLink>
             </li>
           ) : (

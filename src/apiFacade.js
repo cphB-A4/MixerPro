@@ -27,13 +27,19 @@ function apiFacade() {
     return localStorage.getItem("jwtToken");
   };
 
+  const getUsername = () => {
+    var decoded = jwt_decode(getToken());
+       const { username } = decoded;
+       return username;
+  }
+
   //Decode token
 
   const validateAccess = () => {
     var decoded = jwt_decode(getToken());
     const { roles } = decoded;
     //console.log(roles);
-    //  console.log(decoded);
+      console.log(decoded);
     return roles;
   };
 
@@ -110,6 +116,7 @@ function apiFacade() {
     fetchAlotDataParallel,
     validateAccess,
     handleError,
+    getUsername
   };
 }
 const facade = apiFacade();

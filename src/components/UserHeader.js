@@ -10,12 +10,13 @@ import {
 import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import Home from "./Home";
-import FetchSingle from "./FetchSingle";
+import FetchSingle from "./ProfileSite";
 import FetchSequentially from "./FetchSequentially";
 import FetchParallel from "./FetchParallelly";
 import FetchParallelly from "./FetchParallelly";
 import NoMatch from "./NoMatch";
 import axios from "axios";
+import ProfileSite from "./ProfileSite";
 
 function UserHeader(props) {
   const { loggedIn, logout, validateAccess } = props;
@@ -49,13 +50,13 @@ function UserHeader(props) {
         <Route exact path="/">
           <Home/>
         </Route>
-        <Route path="/fetch-single">
-          <FetchSingle />
+        <Route path="/profile-site">
+          <ProfileSite />
         </Route>
 
         {validateAccess === "user" ? (
-          <Route path="/fetch-sequentially">
-            <FetchSequentially />
+          <Route path="/profileSite">
+            <ProfileSite />
           </Route>
         ) : (
           ""
