@@ -1,19 +1,17 @@
 import facade from "../apiFacade";
 import React, { useState, useEffect } from "react";
-import { Col, Container, Dropdown, DropdownButton, Form, Row } from "react-bootstrap";
+import { ButtonGroup, Col, Container, Dropdown, DropdownButton, Form, InputGroup, Row } from "react-bootstrap";
 import ErrorToDisplay from "./ErrorToDisplay";
 import Logo from "../images/mixerProLogo.jpg";
 import axios from "axios";
 import { Typeahead } from "react-bootstrap-typeahead";
 
 function ProfileSite() {
-  //const intialValue = { fact: "", length: "" };
   const [data, setData] = useState({});
   const [error, setError] = useState();
   const [username, setUsername] = useState('none');
   const [genres, setGenres] = useState("");
 
-  const [singleSelections, setSingleSelections] = useState([]);
   const [multiSelections, setMultiSelections] = useState([]);
 
 
@@ -46,21 +44,25 @@ function ProfileSite() {
               alt="Logo"
               className="mt-3 rounded-circle resize mx-auto d-block"
             />
-          
+
             {genres !== "" ? (
               <>
-               {console.log(multiSelections)}
+                {console.log(multiSelections)}
                 <Form.Group style={{ marginTop: "20px" }}>
-                  <Form.Label>Multiple Selections</Form.Label>
+                  <Form.Label>Select Genres</Form.Label>
                   <Typeahead
                     id="basic-typeahead-multiple"
+                    className="test"
                     labelKey="name"
                     multiple
                     onChange={setMultiSelections}
-                     options={genres}
+                    options={genres}
                     placeholder="Update genres ..."
                     selected={multiSelections}
                   />
+                  <button type="submit" className="btn btn-black mt-3">
+                    Update Genre(s)
+                  </button>
                 </Form.Group>
               </>
             ) : (
