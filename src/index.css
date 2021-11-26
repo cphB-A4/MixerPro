@@ -12,6 +12,11 @@ code {
     monospace;
 }
 
+.rbt-token-removeable {
+  cursor: pointer;
+  padding-right: 30px;
+  
+}
 .login-main-text {
   margin-top: 20%;
   padding: 60px;
