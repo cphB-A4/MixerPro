@@ -39,12 +39,11 @@ function ProfileSite() {
 
     // setUserGenres(facade.getUsersFavouriteGenres(facade.getUsername))
     axios(
-      `http://localhost:8080/Spotify_Backend_war_exploded/api/info/userGenres/user`
-    ).then((data) => {
-      console.log(data);
-    })
-
-  
+      `http://localhost:8080/Spotify_Backend_war_exploded/api/info/userGenres/${facade.getUsername()}`
+    ).then((userGenres) => {
+      console.log(userGenres.data);
+      setUserGenres(userGenres.data);
+    });
   }, []);
 
   /*
@@ -109,6 +108,22 @@ function ProfileSite() {
               alt="Logo"
               className="mt-3 rounded-circle resize mx-auto d-block"
             />
+
+            <p>Your favourite Genres:</p>
+
+            {userGenres.map((genre) => (
+              <button type="button" className="btn btn-outline-dark ">
+                {genre}
+                <button onClick={() => console.log("delete")} className="btn-close active"></button>
+              </button>
+              // <span class="tag label label-info">
+              //   <span>Example Tag</span>
+              //   <a>
+              //     <i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i>
+              //   </a>
+              // </span>
+              //  <input type="text" value={genre} data-role="tagsinput "/>
+            ))}
 
             {genres !== "" ? (
               <>
