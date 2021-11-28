@@ -46,6 +46,8 @@ function ProfileSite() {
     });
   }, []);
 
+ 
+
   /*
    facade
       .login(user, pass)
@@ -68,6 +70,33 @@ function ProfileSite() {
       });
   */
 
+     // deleteGenreFromUser;
+
+     function handleDeleteGenreFromUser(genre) {
+       facade
+         .deleteGenreFromUser(genre)
+         .then((res) => {
+           setError("");
+           console.log("hello");
+           const tmpGenres = [...userGenres];
+           var filteredGenres = tmpGenres.filter((e) => e !== genre);
+           setUserGenres(filteredGenres)
+         })
+         .catch((err) => {
+           console.log(err);
+           if (err.status) {
+             err.fullError.then((e) => {
+               console.log(e.code + ": " + e.message);
+               setSuccess(false);
+               setError(e.message);
+             });
+           } else {
+             console.log("Network error");
+             setSuccess(true);
+           }
+         });
+     }
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
     // const multiSelectionsString = JSON.stringify(multiSelections);
@@ -76,8 +105,20 @@ function ProfileSite() {
       .then((res) => {
         setError("");
         console.log("hello");
+        const tmpGenres = [...userGenres];
+        tmpGenres.push.apply(tmpGenres, multiSelections)
+         setUserGenres(tmpGenres);
+        console.log(multiSelections)
+        setMultiSelections([])
+        console.log(multiSelections);
       })
       .catch((err) => {
+        setMultiSelections([]);
+        // console.log(multiSelections);
+         const tmpGenres = [...userGenres];
+         tmpGenres.push.apply(tmpGenres, multiSelections);
+         console.log(tmpGenres)
+         //setUserGenres(tmpGenres);
         console.log(err);
         if (err.status) {
           err.fullError.then((e) => {
@@ -114,7 +155,11 @@ function ProfileSite() {
             {userGenres.map((genre) => (
               <button type="button" className="btn btn-outline-dark ">
                 {genre}
-                <button onClick={() => console.log("delete")} className="btn-close active"></button>
+                <button
+                  key={genre}
+                  onClick={() => handleDeleteGenreFromUser(genre)}
+                  className="btn-close active"
+                ></button>
               </button>
               // <span class="tag label label-info">
               //   <span>Example Tag</span>
