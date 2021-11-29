@@ -25,6 +25,9 @@ function ProfileSite() {
   const[userDescription, setUserDescription] = useState('');
   const[showUserDescription, setShowUserDescription] = useState('');
 
+  //for editing description
+  const [toggle, setToggle] = useState(true);
+
   const [multiSelections, setMultiSelections] = useState([]);
 
   useEffect(() => {
@@ -122,8 +125,10 @@ setShowUserDescription(res.userDescription);
         evt.preventDefault();
 facade.updateUserDescription(userDescription).then((res) => {
   setSuccess(true);
-  console.log("update description for user. success");
   setUserDescription('')
+  setToggle(true);
+  setShowUserDescription(userDescription)
+  //setUserDescription()
 }).catch((err) => {
         
         console.log(err);
@@ -181,7 +186,6 @@ facade.updateUserDescription(userDescription).then((res) => {
 
   return (
     <div>
-      {console.log(showUserDescription)}
       <Container>
         <Row className="rows">
           <Col xs={2} className="columns"></Col>
@@ -195,8 +199,33 @@ facade.updateUserDescription(userDescription).then((res) => {
               className="mt-3 rounded-circle resize mx-auto d-block"
             />
 
-            <p>My Description:</p>
-            <p>{showUserDescription}</p>
+            <p>My Description (double click to edit):</p>
+
+            {toggle ? (
+              <p
+                onDoubleClick={() => {
+                  //showUserDescription is the users current description
+                  setUserDescription(showUserDescription)
+                  setToggle(false);
+                }}
+              >
+                {showUserDescription}
+              </p>
+            ) : (
+              
+              
+              <form onChange={onChangeDescription}>
+                
+                <textarea value={userDescription} />
+                <button
+                  className="btn btn-black mt-2"
+                  onClick={updateDescription}
+                >
+                  Update description
+                </button>
+              </form>
+              
+            )}
 
             <p>My favourite Genres:</p>
 
@@ -244,12 +273,6 @@ facade.updateUserDescription(userDescription).then((res) => {
             ) : (
               <p>loading...</p>
             )}
-            <form onChange={onChangeDescription}>
-              <br></br>
-              {console.log(userDescription)}
-              <input value={userDescription} />
-              <button onClick={updateDescription}>Update description</button>
-            </form>
           </Col>
           <Col xs={2} className="columns"></Col>
         </Row>
