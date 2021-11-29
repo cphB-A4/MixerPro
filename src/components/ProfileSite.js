@@ -22,12 +22,34 @@ function ProfileSite() {
   const [username, setUsername] = useState("none");
   const [genres, setGenres] = useState("");
   const [userGenres, setUserGenres] = useState([]);
+  const[userDescription, setUserDescription] = useState('');
+  const[showUserDescription, setShowUserDescription] = useState('');
 
   const [multiSelections, setMultiSelections] = useState([]);
 
   useEffect(() => {
     setUsername(facade.getUsername);
+    
 
+    facade.getUsersDescriptionById(facade.getUsername())
+    .then((res) => {
+      console.log(res)
+setShowUserDescription(res.userDescription);
+    }).catch((err) => {
+        
+        console.log(err);
+        if (err.status) {
+          err.fullError.then((e) => {
+            console.log(e.code + ": " + e.message);
+            setSuccess(false);
+            setError(e.message);
+          });
+        } else {
+          console.log("Network error");
+        }
+      });
+
+    
     axios(
       `http://localhost:8080/Spotify_Backend_war_exploded/api/info/genres`
     ).then((data) => {
@@ -96,6 +118,32 @@ function ProfileSite() {
          });
      }
 
+     const updateDescription = (evt) => {
+        evt.preventDefault();
+facade.updateUserDescription(userDescription).then((res) => {
+  setSuccess(true);
+  console.log("update description for user. success");
+  setUserDescription('')
+}).catch((err) => {
+        
+        console.log(err);
+        if (err.status) {
+          err.fullError.then((e) => {
+            console.log(e.code + ": " + e.message);
+            setSuccess(false);
+            setError(e.message);
+          });
+        } else {
+          console.log("Network error");
+        }
+      });
+     }
+
+     const onChangeDescription = (evt) => {
+       //console.log(evt.target.value)
+       setUserDescription(evt.target.value);
+     }
+
   const handleSubmit = (evt) => {
     evt.preventDefault();
     // const multiSelectionsString = JSON.stringify(multiSelections);
@@ -133,6 +181,7 @@ function ProfileSite() {
 
   return (
     <div>
+      {console.log(showUserDescription)}
       <Container>
         <Row className="rows">
           <Col xs={2} className="columns"></Col>
@@ -146,7 +195,10 @@ function ProfileSite() {
               className="mt-3 rounded-circle resize mx-auto d-block"
             />
 
-            <p>Your favourite Genres:</p>
+            <p>My Description:</p>
+            <p>{showUserDescription}</p>
+
+            <p>My favourite Genres:</p>
 
             {userGenres.map((genre) => (
               <button type="button" className="btn btn-outline-dark ">
@@ -168,7 +220,6 @@ function ProfileSite() {
 
             {genres !== "" ? (
               <>
-               
                 <Form.Group style={{ marginTop: "20px" }}>
                   <Form.Label>Select Genres</Form.Label>
                   <Typeahead
@@ -193,6 +244,12 @@ function ProfileSite() {
             ) : (
               <p>loading...</p>
             )}
+            <form onChange={onChangeDescription}>
+              <br></br>
+              {console.log(userDescription)}
+              <input value={userDescription} />
+              <button onClick={updateDescription}>Update description</button>
+            </form>
           </Col>
           <Col xs={2} className="columns"></Col>
         </Row>

@@ -82,6 +82,12 @@ function apiFacade() {
       });
   };
 
+  const updateUserDescription = (description) => {
+    const descriptionAsJson = {"description" : description}
+    const options = makeOptions("PUT", true, descriptionAsJson);
+    return fetch(localURL + "/api/info/updateProfile", options).then(handleHttpErrorsNoJson)
+  };
+
   const addGenreToPerson = (username, genres) => {
    
     const options = makeOptions("PUT", true, genres);
@@ -108,6 +114,14 @@ function apiFacade() {
     return fetch(localURL + "/api/info/user", options).then(handleHttpErrors);
   };
 
+  const getUsersDescriptionById = (username) => {
+    const options = makeOptions("GET");
+     return fetch(localURL + "/api/info/userDescription/" + username, options).then(
+       handleHttpErrors
+     );
+
+
+  }
   //Fetches from one endpoint. Only 1 external api call.
   const fetchSingleData = () => {
     const options = makeOptions("GET", true); //True add's the token
@@ -164,6 +178,8 @@ function apiFacade() {
     addGenreToPerson,
     getUsersFavouriteGenres,
     deleteGenreFromUser,
+    updateUserDescription,
+    getUsersDescriptionById,
   };
 }
 const facade = apiFacade();
