@@ -77,7 +77,6 @@ function ProfileSite() {
          .deleteGenreFromUser(genre)
          .then((res) => {
            setError("");
-           console.log("hello");
            const tmpGenres = [...userGenres];
            var filteredGenres = tmpGenres.filter((e) => e !== genre);
            setUserGenres(filteredGenres)
@@ -104,21 +103,19 @@ function ProfileSite() {
       .addGenreToPerson(username, multiSelections)
       .then((res) => {
         setError("");
-        console.log("hello");
         const tmpGenres = [...userGenres];
-        tmpGenres.push.apply(tmpGenres, multiSelections)
-         setUserGenres(tmpGenres);
-        console.log(multiSelections)
-        setMultiSelections([])
-        console.log(multiSelections);
+        //multiSelections has key. userGenres dont:
+        let extractedValues = multiSelections.map((genre) => genre.name);
+        //puts multiselctions array onto the users current favourite generes array.
+         const result = tmpGenres.concat(extractedValues);
+        
+          setUserGenres(result);
+        // console.log(multiSelections)
+         setMultiSelections([])
+        // console.log(multiSelections);
       })
       .catch((err) => {
         setMultiSelections([]);
-        // console.log(multiSelections);
-         const tmpGenres = [...userGenres];
-         tmpGenres.push.apply(tmpGenres, multiSelections);
-         console.log(tmpGenres)
-         //setUserGenres(tmpGenres);
         console.log(err);
         if (err.status) {
           err.fullError.then((e) => {
@@ -138,7 +135,6 @@ function ProfileSite() {
     <div>
       <Container>
         <Row className="rows">
-          {console.log(userGenres)}
           <Col xs={2} className="columns"></Col>
           <Col className="columns text-center">
             <h1 className="text-center mt-3">
@@ -172,7 +168,7 @@ function ProfileSite() {
 
             {genres !== "" ? (
               <>
-                {console.log(multiSelections)}
+               
                 <Form.Group style={{ marginTop: "20px" }}>
                   <Form.Label>Select Genres</Form.Label>
                   <Typeahead

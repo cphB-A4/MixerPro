@@ -11,6 +11,14 @@ function handleHttpErrors(res) {
   return res.json();
 }
 
+function handleHttpErrorsNoJson(res) {
+  if (!res.ok) {
+    return Promise.reject({ status: res.status, fullError: res.json() });
+  }
+
+  return res;
+}
+
 function handleError(error, setError) {
   if (error.status) {
     error.fullError.then((data) => setError(data));
@@ -78,11 +86,8 @@ function apiFacade() {
    
     const options = makeOptions("PUT", true, genres);
    
-    return fetch(localURL + "/api/info/" + username, options)
-      .then(handleHttpErrors)
-      .then((res) => {
-       
-      });
+    return fetch(localURL + "/api/info/" + username, options).then(handleHttpErrorsNoJson)
+      
   };
 
   const login = (user, password) => {
