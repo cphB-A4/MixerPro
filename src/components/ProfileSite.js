@@ -37,7 +37,10 @@ function ProfileSite() {
     facade.getUsersDescriptionById(facade.getUsername())
     .then((res) => {
       console.log(res)
+     
 setShowUserDescription(res.userDescription);
+      
+       
     }).catch((err) => {
         
         console.log(err);
@@ -67,33 +70,16 @@ setShowUserDescription(res.userDescription);
       `http://localhost:8080/Spotify_Backend_war_exploded/api/info/userGenres/${facade.getUsername()}`
     ).then((userGenres) => {
       console.log(userGenres.data);
-      setUserGenres(userGenres.data);
+      if(userGenres.data == null){
+setUserGenres([])
+console.log("is null")
+      } else {
+ setUserGenres(userGenres.data);
+      }
+     
     });
   }, []);
 
- 
-
-  /*
-   facade
-      .login(user, pass)
-      .then((res) => {
-        //If user login succesfully it redirects to homepage
-        setLoggedIn(true);
-        setErrorMsg("");
-        const path = `/`;
-        history.push(path);
-      })
-      .catch((err) => {
-        if (err.status) {
-          err.fullError.then((e) => {
-            console.log(e.code + ": " + e.message);
-            setErrorMsg(e.code + ": " + e.message);
-          });
-        } else {
-          console.log("Network error");
-        }
-      });
-  */
 
      // deleteGenreFromUser;
 
@@ -156,6 +142,7 @@ facade.updateUserDescription(userDescription).then((res) => {
       .addGenreToPerson(username, multiSelections)
       .then((res) => {
         setError("");
+        
         const tmpGenres = [...userGenres];
         //multiSelections has key. userGenres dont:
         let extractedValues = multiSelections.map((genre) => genre.name);
@@ -229,7 +216,9 @@ facade.updateUserDescription(userDescription).then((res) => {
 
             <p>My favourite Genres:</p>
 
-            {userGenres.map((genre) => (
+{userGenres !== null ? (
+<>
+  {userGenres.map((genre) => (
               <button type="button" className="btn btn-outline-dark ">
                 {genre}
                 <button
@@ -237,15 +226,10 @@ facade.updateUserDescription(userDescription).then((res) => {
                   onClick={() => handleDeleteGenreFromUser(genre)}
                   className="btn-close active"
                 ></button>
-              </button>
-              // <span class="tag label label-info">
-              //   <span>Example Tag</span>
-              //   <a>
-              //     <i class="remove glyphicon glyphicon-remove-sign glyphicon-white"></i>
-              //   </a>
-              // </span>
-              //  <input type="text" value={genre} data-role="tagsinput "/>
-            ))}
+              </button> ))} 
+         
+          
+             </>) : (<p>No genres chosen</p>)}
 
             {genres !== "" ? (
               <>

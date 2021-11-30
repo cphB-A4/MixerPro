@@ -81,6 +81,7 @@ const [showRegisterError, setShowRegisterError] = useState(false);
                 <p>Login and share music </p>
               </Col>
               <Col className="columns login-form">
+                <h1 className="text-center">Login</h1>
                 <Form onChange={onChange}>
                   <Form.Group className="mb-3">
                     <Form.Label>Username</Form.Label>
@@ -103,16 +104,21 @@ const [showRegisterError, setShowRegisterError] = useState(false);
                   >
                     Login
                   </button>
-                  <button
-                    type="submit"
-                    class="btn btn-black"
-                    onClick={(evt) => {
-                      evt.preventDefault();
-                      setToggle(true);
-                    }}
-                  >
-                    Register
-                  </button>
+                  {!toggle ? (
+                    <button
+                      type="submit"
+                      class="btn btn-black"
+                      onClick={(evt) => {
+                        evt.preventDefault();
+                        setToggle(true);
+                      }}
+                    >
+                      Register
+                    </button>
+                  ) : (
+                    ""
+                  )}
+
                   {errorMsg ? <ErrorToDisplay errorMsg={errorMsg} /> : ""}
                 </Form>
               </Col>
@@ -123,10 +129,11 @@ const [showRegisterError, setShowRegisterError] = useState(false);
           {toggle ? (
             <Container>
               <Row className="rows">
-                <Col className="columns login-form">
+                <Col className="columns">
+                  <h1 className="text-center">Register</h1>
                   <Form onChange={handleChangeRegister}>
                     <Form.Group className="mb-3">
-                      <Form.Label>Username</Form.Label>
+                      <Form.Label>Enter Username</Form.Label>
                       <Form.Control
                         placeholder="Enter username"
                         id="newUsername"
@@ -134,24 +141,31 @@ const [showRegisterError, setShowRegisterError] = useState(false);
                     </Form.Group>
 
                     <Form.Group className="mb-3">
-                      <Form.Label>Password</Form.Label>
+                      <Form.Label>Enter Password</Form.Label>
                       <Form.Control
                         type="password"
                         placeholder="Password"
                         id="newPassword"
                       />
                     </Form.Group>
-                    <button
-                      type="submit"
-                      class="btn btn-black"
-                      onClick={handleRegister}
-                    >
-                      Register
-                    </button>
+                    <div class="row justify-content-center">
+                      <button
+                        type="submit"
+                        class="btn btn-black"
+                        onClick={handleRegister}
+                      >
+                        Register
+                      </button>
+                    </div>
                     {showRegisterError ? (
                       <ErrorToDisplay errorMsg={registerError} />
                     ) : (
-                      ""
+                      <>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                      </>
                     )}
                   </Form>
                 </Col>

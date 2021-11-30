@@ -12,6 +12,7 @@ function handleHttpErrors(res) {
 }
 
 function handleHttpErrorsNoJson(res) {
+
   if (!res.ok) {
     return Promise.reject({ status: res.status, fullError: res.json() });
   }
@@ -93,7 +94,7 @@ function apiFacade() {
   const updateUserDescription = (description) => {
     const descriptionAsJson = {"description" : description}
     const options = makeOptions("PUT", true, descriptionAsJson);
-    return fetch(localURL + "/api/info/updateProfile", options).then(handleHttpErrorsNoJson)
+    return fetch(localURL + "/api/info/updateProfile", options).then(handleHttpErrorsNoJson).then((res) => {} )
   };
 
   const addGenreToPerson = (username, genres) => {
