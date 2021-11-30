@@ -202,7 +202,7 @@ facade.updateUserDescription(userDescription).then((res) => {
             <p>My Description (double click to edit):</p>
 
             {toggle ? (
-              <p
+              <p id="description-text"
                 onDoubleClick={() => {
                   //showUserDescription is the users current description
                   setUserDescription(showUserDescription)

@@ -17,6 +17,7 @@ import FetchParallelly from "./FetchParallelly";
 import NoMatch from "./NoMatch";
 import axios from "axios";
 import ProfileSite from "./ProfileSite";
+import ShareSongs from "./ShareSongs";
 
 function UserHeader(props) {
   const { loggedIn, logout, validateAccess } = props;
@@ -55,9 +56,14 @@ function UserHeader(props) {
         </Route>
 
         {validateAccess === "user" ? (
+          <>
           <Route path="/profileSite">
             <ProfileSite />
           </Route>
+           <Route path="/shareSongs">
+            <ShareSongs />
+          </Route>
+          </>
         ) : (
           ""
         )}

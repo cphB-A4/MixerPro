@@ -3,8 +3,6 @@ import { NavLink, Route } from "react-router-dom";
 function Header({ loggedIn, logout, validateAccess }) {
   return (
     <ul className="header">
-     
-
       {/* <li>
         <NavLink exact activeClassName="active" to="/fetch-single">
           FetchSingle
@@ -25,11 +23,18 @@ function Header({ loggedIn, logout, validateAccess }) {
           </li>
 
           {validateAccess === "user" ? (
+            <>
             <li>
               <NavLink exact activeClassName="active" to="/profile-site">
                 Profile Site
               </NavLink>
+               </li>
+               <li>
+              <NavLink exact activeClassName="active" to="/shareSongs">
+                Share Songs
+              </NavLink>
             </li>
+            </>
           ) : (
             ""
           )}
