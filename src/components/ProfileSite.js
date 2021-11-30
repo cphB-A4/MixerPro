@@ -22,8 +22,8 @@ function ProfileSite() {
   const [username, setUsername] = useState("none");
   const [genres, setGenres] = useState("");
   const [userGenres, setUserGenres] = useState([]);
-  const[userDescription, setUserDescription] = useState('');
-  const[showUserDescription, setShowUserDescription] = useState('');
+  const[userDescription, setUserDescription] = useState(''); //handle input when updating description
+  const[showUserDescription, setShowUserDescription] = useState(''); //display the users current description ('No description yet' if user has no description (only on user side))
 
   //for editing description
   const [toggle, setToggle] = useState(true);

@@ -1,8 +1,9 @@
 import { Typeahead } from "react-bootstrap-typeahead";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Form } from "react-bootstrap";
+import { Col, Container, Form } from "react-bootstrap";
 import DisplaySongs from "./DisplaySongs";
+import DisplaySongsInForm from "./DisplaySongsInForm";
 
 
 function ShareSongs() {
@@ -12,18 +13,10 @@ function ShareSongs() {
     const [token, setToken] = useState("");
     const [tracks, setTracks] = useState("");
       const [options, setOptions] = useState("");
+    //   const[trackId, setTrackId] = useState("");//To retreive track from DisplaySongsInForm component
 
-
-    const handleOnChange = (evt) => {
-      evt.preventDefault();
-    setSongsSelection(evt.target.value);
-    };
-
-     const handleSubmit = (evt) => {
-       evt.preventDefault();
-       //every time user types something the suggestions (LIMIT 5) changes
-       //api keys
-       var clientId = process.env.REACT_APP_CLIENT_ID;
+      useEffect(() => {
+ var clientId = process.env.REACT_APP_CLIENT_ID;
        var clientSecret = process.env.REACT_APP_CLIENT_SECRET;
 
        //Get the token from the keys
@@ -36,37 +29,52 @@ function ShareSongs() {
          method: "POST",
        }).then((tokenResponse) => {
          setToken(tokenResponse.data.access_token);
-         //fetch 5 tracks based on userInput
-         axios(
-           `https://api.spotify.com/v1/search?q=${songsSelection}10&type=track`,
-           {
-             method: "GET",
-             headers: {
-               Authorization: "Bearer " + tokenResponse.data.access_token,
-             },
-           }
-         ).then((tracksResponse) => {
-           setTracks(tracksResponse);
-                setOptions(tracksResponse)
-           console.log(tracksResponse);
-         });
        });
-     };
+      },[])
 
+
+    const handleOnChange = (evt) => {
+      evt.preventDefault();
+    setSongsSelection(evt.target.value);
+     axios(
+       `https://api.spotify.com/v1/search?q=${songsSelection}10&type=track&limit=8`,
+       {
+         method: "GET",
+         headers: {
+           Authorization: "Bearer " + token,
+         },
+       }
+     ).then((tracksResponse) => {
+       setTracks(tracksResponse);
+     });
+    };
+
+     const handleSubmit = (evt) => {
+       evt.preventDefault();
+ 
+     };
+   
   return (
-    <div>
-      <p>Share songs</p>
-      <Form.Group style={{ marginTop: "20px" }}>
-        <Form.Label>Select song to share</Form.Label>
-        <form onChange={handleOnChange}>
-          <input value={songsSelection} />
-          <button className="btn btn-black mt-2" onClick={handleSubmit}>
-            Search For Songs to Post
-          </button>
-        </form>
-      </Form.Group>
-      {tracks !== "" ? <DisplaySongs tracks={tracks} /> : ""}
-    </div>
+    <>
+      <h1 className="text-center mt-3">Share songs</h1>
+
+      <form onChange={handleOnChange}>
+        <input
+          className="form-control"
+          placeholder="Search..."
+          value={songsSelection}
+        />
+      </form>
+
+      {tracks !== "" ? (
+        <DisplaySongsInForm
+          tracks={tracks}
+          
+        />
+      ) : (
+        ""
+      )}
+    </>
   );
 }
 

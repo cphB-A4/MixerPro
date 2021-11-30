@@ -36,8 +36,10 @@ function DisplaySongs({ tracks }) {
             //   <td>
             //     <a href={track.external_urls.spotify}>
             //       <img
-            //         className="album-cover"
+            //         className="resize-img"
             //         alt="album cover"
+            //         width="200"
+            //         height="40"
             //         src={track.album.images[0].url}
             //       />
             //     </a>
