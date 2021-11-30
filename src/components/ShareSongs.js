@@ -14,6 +14,7 @@ function ShareSongs() {
     const [tracks, setTracks] = useState("");
       const [options, setOptions] = useState("");
     //   const[trackId, setTrackId] = useState("");//To retreive track from DisplaySongsInForm component
+    const[trackId, setTrackId] = useState("")
 
       useEffect(() => {
  var clientId = process.env.REACT_APP_CLIENT_ID;
@@ -65,12 +66,9 @@ function ShareSongs() {
           value={songsSelection}
         />
       </form>
-
+      {console.log("trackId: " + trackId)}
       {tracks !== "" ? (
-        <DisplaySongsInForm
-          tracks={tracks}
-          
-        />
+        <DisplaySongsInForm tracks={tracks} stateChanger={setTrackId} />
       ) : (
         ""
       )}
