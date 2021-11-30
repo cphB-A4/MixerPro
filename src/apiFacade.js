@@ -55,6 +55,14 @@ function apiFacade() {
        });
    };
 
+   const registerUser = (registerCredentials) => {
+     const options = makeOptions('POST',true,registerCredentials);
+     console.log(registerCredentials)
+     return fetch(localURL + "/api/info/register", options)
+       .then(handleHttpErrorsNoJson)
+       .then((res) => {});
+   }
+
   //Decode token
 
   const validateAccess = () => {
@@ -180,6 +188,7 @@ function apiFacade() {
     deleteGenreFromUser,
     updateUserDescription,
     getUsersDescriptionById,
+    registerUser,
   };
 }
 const facade = apiFacade();
