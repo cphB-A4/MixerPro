@@ -1,5 +1,6 @@
 import jwt_decode from "jwt-decode";
-import { URL, localURL } from "./Settings";
+import { localURL } from "./Settings";
+//import { URL, localURL } from "./Settings";
 
 //URL = "https://www.theagns.com/CA2-Backend";
 function handleHttpErrors(res) {

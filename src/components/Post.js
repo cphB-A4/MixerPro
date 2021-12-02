@@ -1,4 +1,4 @@
-import { Col, Container, Row, Table } from "react-bootstrap";
+import { Table } from "react-bootstrap";
 
 function Post({ track, addPostChangeState, setSongDescription }) {
   /*
@@ -13,10 +13,12 @@ function Post({ track, addPostChangeState, setSongDescription }) {
       }
   return (
     <div>
-      <p>{JSON.stringify(track)}</p>
+      {/* <p>{JSON.stringify(track)}</p> */}
       <div className="share-songs-post">
         <Table striped>
+            <tbody>
           <tr>
+              <td>
             <a href={track.spotifyLinkUrl}>
               <img
                 className="resize-img"
@@ -26,6 +28,7 @@ function Post({ track, addPostChangeState, setSongDescription }) {
                 src={track.coverUrl}
               />
             </a>
+            </td>
 
             <td>
               Track:
@@ -37,12 +40,13 @@ function Post({ track, addPostChangeState, setSongDescription }) {
               Song: <strong>{track.artist} </strong>
             </td>
           </tr>
+          </tbody>
         </Table>
         <textarea onChange={handleSongsDescription} className="text-area-post"></textarea>
         <button
           onClick={() => {
             addPostChangeState(true);
-            console.log("hellooooooo");
+       
           }}
           className="btn btn-black"
         >

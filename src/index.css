@@ -138,6 +138,16 @@ td img {
   height: 150px;
 } 
 
+/*Removes bulletpoints for ul tags*/
+ul {
+  list-style-type: none;
+  
+}
+/*Display li on the same line*/
+li {
+  display: inline;
+}
+
 
 
 

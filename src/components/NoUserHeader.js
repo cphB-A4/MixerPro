@@ -1,25 +1,17 @@
 import {
-  BrowserRouter as Router,
   Switch,
   Route,
-  Link,
-  useParams,
-  NavLink,
-  useHistory,
 } from "react-router-dom";
 import { Col, Container, Form, Row } from "react-bootstrap";
 
-import React, { useState, useEffect } from "react";
-import Home from "./Home";
-import Header from "./Header";
-import FetchSingle from "./ProfileSite";
+import React, { useState } from "react";
 import NoMatch from "./NoMatch";
 import ErrorToDisplay from "./ErrorToDisplay";
 import Logo from "../images/mixerProLogo.jpg";
 import facade from "../apiFacade";
 
 function NoUserHeader(props) {
-  const { login, loggedIn, errorMsg } = props;
+  const { login, errorMsg } = props;
   const init = { username: "", password: "" };
     const initRegister = { newUsername: "", newPassword: "" };
   const [loginCredentials, setLoginCredentials] = useState(init);
@@ -28,7 +20,6 @@ function NoUserHeader(props) {
 const [registerError, setRegisterError] = useState(null);
 const [showRegisterError, setShowRegisterError] = useState(false);
 
-  const history = useHistory();
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -100,7 +91,7 @@ const [showRegisterError, setShowRegisterError] = useState(false);
 
                   <button
                     type="submit"
-                    class="btn btn-black"
+                    className="btn btn-black"
                     onClick={handleSubmit}
                   >
                     Login
@@ -108,7 +99,7 @@ const [showRegisterError, setShowRegisterError] = useState(false);
                   {!toggle ? (
                     <button
                       type="submit"
-                      class="btn btn-black"
+                      className="btn btn-black"
                       onClick={(evt) => {
                         evt.preventDefault();
                         setToggle(true);
@@ -126,7 +117,7 @@ const [showRegisterError, setShowRegisterError] = useState(false);
               <Col xs={2} className="columns"></Col>
             </Row>
           </Container>
-          {console.log(toggle)}
+          
           {toggle ? (
             <Container>
               <Row className="rows">
@@ -149,10 +140,10 @@ const [showRegisterError, setShowRegisterError] = useState(false);
                         id="newPassword"
                       />
                     </Form.Group>
-                    <div class="row justify-content-center">
+                    <div className="row justify-content-center">
                       <button
                         type="submit"
-                        class="btn btn-black"
+                        className="btn btn-black"
                         onClick={handleRegister}
                       >
                         Register

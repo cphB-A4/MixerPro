@@ -1,10 +1,5 @@
-import { Col, Container, Row, Table } from "react-bootstrap";
-import React, { useState, useEffect } from "react";
+import {  Table } from "react-bootstrap";
 function DisplaySongsInForm({ tracks, stateChanger, changeTracksState }) {
-  //console.log(tracks);
-  //console.log(tracks.data.tracks.items);
-  //const[trackId, setTrackId] = useState("")
-  const track = {};
 
   return (
     <Table striped bordered hover>
@@ -20,7 +15,7 @@ function DisplaySongsInForm({ tracks, stateChanger, changeTracksState }) {
           </thead>
           <tbody>
             {tracks.data.tracks.items.map((track, index) => (
-              <tr>
+              <tr key={index}>
                 <td>
                   <button
                     className="btn btn-black"

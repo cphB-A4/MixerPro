@@ -1,13 +1,9 @@
 import facade from "../apiFacade";
 import React, { useState, useEffect } from "react";
 import {
-  ButtonGroup,
   Col,
   Container,
-  Dropdown,
-  DropdownButton,
   Form,
-  InputGroup,
   Row,
 } from "react-bootstrap";
 import ErrorToDisplay from "./ErrorToDisplay";
@@ -36,8 +32,7 @@ function ProfileSite() {
 
     facade.getUsersDescriptionById(facade.getUsername())
     .then((res) => {
-      console.log(res)
-     
+  //Set profile description from db
 setShowUserDescription(res.userDescription);
       
        
@@ -60,19 +55,16 @@ setShowUserDescription(res.userDescription);
       `http://localhost:8080/Spotify_Backend_war_exploded/api/info/genres`
     ).then((data) => {
       const options = data.data.map((genre) => ({ name: genre.name }));
-      console.log(options);
       setGenres(options);
-      console.log(data);
     });
 
     // setUserGenres(facade.getUsersFavouriteGenres(facade.getUsername))
     axios(
       `http://localhost:8080/Spotify_Backend_war_exploded/api/info/userGenres/${facade.getUsername()}`
     ).then((userGenres) => {
-      console.log(userGenres.data);
+      //console.log(userGenres.data);
       if(userGenres.data == null){
 setUserGenres([])
-console.log("is null")
       } else {
  setUserGenres(userGenres.data);
       }
@@ -189,47 +181,53 @@ facade.updateUserDescription(userDescription).then((res) => {
             <p>My Description (double click to edit):</p>
 
             {toggle ? (
-              <p id="description-text"
+              <p
+                id="description-text"
                 onDoubleClick={() => {
                   //showUserDescription is the users current description
-                  setUserDescription(showUserDescription)
+                  setUserDescription(showUserDescription);
                   setToggle(false);
                 }}
               >
                 {showUserDescription}
               </p>
             ) : (
-              
-              
-              <form onChange={onChangeDescription}>
-                
-                <textarea value={userDescription} />
+             <>
+                <textarea
+                  onChange={onChangeDescription}
+                  value={userDescription}
+                />
                 <button
                   className="btn btn-black mt-2"
                   onClick={updateDescription}
                 >
                   Update description
                 </button>
-              </form>
-              
+             </>
             )}
 
             <p>My favourite Genres:</p>
 
-{userGenres !== null ? (
-<>
-  {userGenres.map((genre) => (
-              <button type="button" className="btn btn-outline-dark ">
-                {genre}
-                <button
-                  key={genre}
-                  onClick={() => handleDeleteGenreFromUser(genre)}
-                  className="btn-close active"
-                ></button>
-              </button> ))} 
-         
-          
-             </>) : (<p>No genres chosen</p>)}
+            {userGenres !== null ? (
+              <>
+                <ul>
+                  {userGenres.map((genre, index) => (
+                    <li key={index}>
+                      <div type="button" className="btn btn-outline-dark ">
+                        {genre}
+                        <button
+                          key={genre}
+                          onClick={() => handleDeleteGenreFromUser(genre)}
+                          className="btn-close active"
+                        ></button>
+                      </div>{" "}
+                    </li>
+                  ))}
+                </ul>{" "}
+              </>
+            ) : (
+              <p>No genres chosen</p>
+            )}
 
             {genres !== "" ? (
               <>

@@ -1,6 +1,5 @@
-import Button from "@restart/ui/esm/Button";
 import { Card, CardGroup } from "react-bootstrap";
-import { Col, Container, Row } from "react-bootstrap";
+//import { Col, Container, Row } from "react-bootstrap";
 
 function DisplaySongs({ tracks }) {
   //console.log(tracks);
@@ -11,7 +10,7 @@ function DisplaySongs({ tracks }) {
       {
         <ul>
           {tracks.data.tracks.items.map((track, index) => (
-            <>
+            <li key={track.external_urls.spotify}>
               <CardGroup>
                 <Card>
                   <a href={track.external_urls.spotify}>
@@ -29,22 +28,7 @@ function DisplaySongs({ tracks }) {
                   </Card.Body>
                 </Card>
               </CardGroup>
-            </>
-            // <tr>
-            //   <td>{track.name}</td>
-            //   <td>{track.artists[0].name}</td>
-            //   <td>
-            //     <a href={track.external_urls.spotify}>
-            //       <img
-            //         className="resize-img"
-            //         alt="album cover"
-            //         width="200"
-            //         height="40"
-            //         src={track.album.images[0].url}
-            //       />
-            //     </a>
-            //   </td>
-            // </tr>
+            </li>
           ))}
         </ul>
       }

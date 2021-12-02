@@ -1,8 +1,5 @@
-import { Typeahead } from "react-bootstrap-typeahead";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Col, Container, Form } from "react-bootstrap";
-import DisplaySongs from "./DisplaySongs";
 import DisplaySongsInForm from "./DisplaySongsInForm";
 import Post from "./Post";
 import facade from "../apiFacade";
@@ -15,7 +12,6 @@ function ShareSongs() {
   //needs token to request
   const [token, setToken] = useState("");
   const [tracks, setTracks] = useState("");
-  const [options, setOptions] = useState("");
    const [error, setError] = useState();
    const [success, setSuccess] = useState();
   //   const[trackId, setTrackId] = useState("");//To retreive track from DisplaySongsInForm component
@@ -50,23 +46,29 @@ function ShareSongs() {
   const handleOnChange = (evt) => {
     evt.preventDefault();
     setSongsSelection(evt.target.value);
+    //prevents making api call on empty input
+    if(evt.target.value.length < 1){
+        return
+    }
     axios(
-      `https://api.spotify.com/v1/search?q=${songsSelection}&type=track&limit=8`,
+      `https://api.spotify.com/v1/search?q=${evt.target.value}&type=track&limit=8`,
       {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
         },
       }
-    ).then((tracksResponse) => {
-      setTracks(tracksResponse);
-    });
+    )
+      .then((tracksResponse) => {
+        setTracks(tracksResponse);
+      })
+      .catch((err) => {
+      
+        setSuccess(false);
+        //axios handles errors diffrently from fetch
+        setError(err.response.data.error.message);
+      });
   };
-
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
-  };
-
 
   //Happens everytime user posts a song
   const addPost = () => {
@@ -75,11 +77,10 @@ function ShareSongs() {
     let tmpPost = trackToSave;
     //adds the description the to the selected song in the post
     tmpPost.description = songDescription;
-    console.log(tmpPost);
     facade
       .addPost(tmpPost)
       .then((res) => {
-        console.log(res);
+       
          setSuccess(true);
         //after submit
         setTrackToSave(initTrack);
@@ -93,6 +94,8 @@ function ShareSongs() {
             setError(e.message);
           });
         } else {
+            setSuccess(false);
+            setError("Network Error. Contact IT");
           console.log("Network error");
         }
       });
@@ -105,15 +108,16 @@ function ShareSongs() {
     <>
       <h1 className="text-center mt-3">Share songs</h1>
 
-      <form onChange={handleOnChange}>
+      
         <input
+          onChange={handleOnChange}
           className="form-control"
           placeholder="Search..."
           value={songsSelection}
         />
-      </form>
+      
 
-      {console.log("trackId: " + JSON.stringify(trackToSave))}
+      {/* {console.log("trackId: " + JSON.stringify(trackToSave))} */}
       {tracks !== "" ? (
         <DisplaySongsInForm
           tracks={tracks}
@@ -124,10 +128,11 @@ function ShareSongs() {
         ""
       )}
       {trackToSave.trackId === -1 ? (
-        <p>TrackToSave id != -1</p>
+        // <p>TrackToSave id != -1</p> 
+        ""
       ) : (
         <>
-          {" "}
+        
           <Post
             addPostChangeState={setPostSong}
             track={trackToSave}
@@ -138,7 +143,9 @@ function ShareSongs() {
       {/* when user click 'postSong' in Post component the postSong state is true and the function addPost() submits the post to db */}
       {postSong ? <>{addPost()}</> : ""}
       {error && <ErrorToDisplay errorMsg={error} />}
-      {success && <SuccesToDisplay msg={"Successfully posted. Check your Site"} />}
+      {success && (
+        <SuccesToDisplay msg={"Successfully posted. Check your Site"} />
+      )}
     </>
   );
 }

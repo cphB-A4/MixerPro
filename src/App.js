@@ -1,22 +1,18 @@
-import logo from "./logo.svg";
 import "./App.css";
-import Header from "./components/Header";
 import facade from "./apiFacade";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useParams,
-  NavLink,
+  //BrowserRouter as Router,
+  //Switch,
+  //Route,
+  //Link,
+  //useParams,
+  //NavLink,
   useHistory,
 } from "react-router-dom";
-import Home from "./components/Home";
-import Login from "./components/Login";
-import FetchSingle from "./components/ProfileSite";
+
 import NoUserHeader from "./components/NoUserHeader";
 import UserHeader from "./components/UserHeader";
 
