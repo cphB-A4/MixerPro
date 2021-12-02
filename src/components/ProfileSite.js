@@ -7,6 +7,7 @@ import {
   Row,
 } from "react-bootstrap";
 import ErrorToDisplay from "./ErrorToDisplay";
+import DisplayPosts from "./DisplayPosts"
 import Logo from "../images/mixerProLogo.jpg";
 import axios from "axios";
 import { Typeahead } from "react-bootstrap-typeahead";
@@ -26,7 +27,41 @@ function ProfileSite() {
 
   const [multiSelections, setMultiSelections] = useState([]);
 
+  //state for posts 
+  const[showPosts, setShowPosts] = useState(false);
+  const intalStatePost= {}
+  const [posts, setPosts] = useState([])
+
   useEffect(() => {
+    facade
+      .getAllPostsByUsername(facade.getUsername())
+      .then((res) => {
+        //retrieve all posts made by the user
+        let tmpPost = res.map((post) => ({
+          artist: post.artist,
+          coverUrl: post.coverUrl,
+          description: post.description,
+          spotifyLinkUrl: post.spotifyLinkUrl,
+          track: post.track,
+        }));
+        console.log(tmpPost);
+        setPosts(tmpPost);
+        //fires the DisplayPosts component
+        setShowPosts(true);
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.status) {
+          err.fullError.then((e) => {
+            console.log(e.code + ": " + e.message);
+            setSuccess(false);
+            setError(e.message);
+          });
+        } else {
+          console.log("Network error");
+        }
+      });
+
     setUsername(facade.getUsername);
     
 
@@ -54,7 +89,9 @@ setShowUserDescription(res.userDescription);
     axios(
       `http://localhost:8080/Spotify_Backend_war_exploded/api/info/genres`
     ).then((data) => {
+     
       const options = data.data.map((genre) => ({ name: genre.name }));
+     
       setGenres(options);
     });
 
@@ -192,7 +229,7 @@ facade.updateUserDescription(userDescription).then((res) => {
                 {showUserDescription}
               </p>
             ) : (
-             <>
+              <>
                 <textarea
                   onChange={onChangeDescription}
                   value={userDescription}
@@ -203,7 +240,7 @@ facade.updateUserDescription(userDescription).then((res) => {
                 >
                   Update description
                 </button>
-             </>
+              </>
             )}
 
             <p>My favourite Genres:</p>
@@ -246,7 +283,7 @@ facade.updateUserDescription(userDescription).then((res) => {
                   <button
                     onClick={handleSubmit}
                     type="submit"
-                    className="btn btn-black mt-3"
+                    className="btn btn-black mt-3 mb-5"
                   >
                     Update Genre(s)
                   </button>
@@ -260,6 +297,7 @@ facade.updateUserDescription(userDescription).then((res) => {
         </Row>
         {error && <ErrorToDisplay errorMsg={error} />}
         {success && <SuccesToDisplay msg={"Successfully added"} />}
+        {showPosts && <DisplayPosts posts={posts}/>}
       </Container>
     </div>
   );

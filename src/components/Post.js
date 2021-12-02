@@ -15,7 +15,7 @@ function Post({ track, addPostChangeState, setSongDescription }) {
     <div>
       {/* <p>{JSON.stringify(track)}</p> */}
       <div className="share-songs-post">
-        <Table striped>
+       <table>
             <tbody>
           <tr>
               <td>
@@ -41,7 +41,8 @@ function Post({ track, addPostChangeState, setSongDescription }) {
             </td>
           </tr>
           </tbody>
-        </Table>
+           </table>
+        
         <textarea onChange={handleSongsDescription} className="text-area-post"></textarea>
         <button
           onClick={() => {

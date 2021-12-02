@@ -134,9 +134,15 @@ function apiFacade() {
      return fetch(localURL + "/api/info/userDescription/" + username, options).then(
        handleHttpErrors
      );
-
-
   }
+
+  const getAllPostsByUsername = (username) => {
+    const options = makeOptions("GET");
+    return fetch(
+      localURL + "/api/post/getAllPostsByUsername/" + username,
+      options
+    ).then(handleHttpErrors);
+  };
   //Fetches from one endpoint. Only 1 external api call.
   const fetchSingleData = () => {
     const options = makeOptions("GET", true); //True add's the token
@@ -197,6 +203,7 @@ function apiFacade() {
     getUsersDescriptionById,
     registerUser,
     addPost,
+    getAllPostsByUsername,
   };
 }
 const facade = apiFacade();
