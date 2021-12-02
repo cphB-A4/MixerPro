@@ -3,6 +3,7 @@ import { URL, localURL } from "./Settings";
 
 //URL = "https://www.theagns.com/CA2-Backend";
 function handleHttpErrors(res) {
+  
   if (!res.ok) {
    
     return Promise.reject({ status: res.status, fullError: res.json() });
@@ -12,7 +13,6 @@ function handleHttpErrors(res) {
 }
 
 function handleHttpErrorsNoJson(res) {
-
   if (!res.ok) {
     return Promise.reject({ status: res.status, fullError: res.json() });
   }
@@ -62,6 +62,11 @@ function apiFacade() {
      return fetch(localURL + "/api/info/register", options)
        .then(handleHttpErrorsNoJson)
        .then((res) => {});
+   }
+
+   const addPost = (post) => {
+     const options = makeOptions('POST',true,post);
+     return fetch(localURL + "/api/post/add",options).then(handleHttpErrorsNoJson);
    }
 
   //Decode token
@@ -190,6 +195,7 @@ function apiFacade() {
     updateUserDescription,
     getUsersDescriptionById,
     registerUser,
+    addPost,
   };
 }
 const facade = apiFacade();
