@@ -12,6 +12,7 @@ import Logo from "../images/mixerProLogo.jpg";
 import axios from "axios";
 import { Typeahead } from "react-bootstrap-typeahead";
 import SuccesToDisplay from "./SuccessToDisplay";
+import GifModal from "./GifModal";
 
 function ProfileSite() {
   const [error, setError] = useState();
@@ -31,8 +32,71 @@ function ProfileSite() {
   const[showPosts, setShowPosts] = useState(false);
   const intalStatePost= {}
   const [posts, setPosts] = useState([])
+  const [gifs, setGifs] = useState('')
+  const [displayGifImg, setDisplayGifImg] = useState("");
+  const [gifFromServer, setGifFromServer] = useState("")
+
+  //every time user updates gif profile image
+
+  const updateProfileGifUrlDb = (gifUrl) => {
+facade
+  .updateProfileGifUrl(gifUrl)
+  .then((res) => {
+  
+  })
+  .catch((err) => {
+    console.log(err);
+    if (err.status) {
+      err.fullError.then((e) => {
+        console.log(e.code + ": " + e.message);
+        setSuccess(false);
+        setError(e.message);
+      });
+    } else {
+      console.log("Network error");
+    }
+  });
+  }
 
   useEffect(() => {
+
+    facade
+      .getProfileGifUrlById(facade.getUsername())
+      .then((res) => {
+        setDisplayGifImg(res.profileGifUrl);
+        //setGifFromServer();
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.status) {
+          err.fullError.then((e) => {
+            console.log(e.code + ": " + e.message);
+            setSuccess(false);
+            setError(e.message);
+          });
+        } else {
+          console.log("Network error");
+        }
+      });
+
+
+    facade
+      .getTrendingGifs()
+      .then((res) => {
+        setGifs(res);
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.status) {
+          err.fullError.then((e) => {
+            console.log(e.code + ": " + e.message);
+            setSuccess(false);
+            setError(e.message);
+          });
+        } else {
+          console.log("Network error");
+        }
+      });
     facade
       .getAllPostsByUsername(facade.getUsername())
       .then((res) => {
@@ -44,7 +108,7 @@ function ProfileSite() {
           spotifyLinkUrl: post.spotifyLinkUrl,
           track: post.track,
         }));
-        console.log(tmpPost);
+        //console.log(tmpPost);
         setPosts(tmpPost);
         //fires the DisplayPosts component
         setShowPosts(true);
@@ -209,11 +273,31 @@ facade.updateUserDescription(userDescription).then((res) => {
             <h1 className="text-center mt-3">
               Welcome <strong>{username}</strong>
             </h1>
-            <img
-              src={Logo}
-              alt="Logo"
-              className="mt-3 rounded-circle resize mx-auto d-block"
-            />
+            {displayGifImg === "" ? (
+              <img
+                src={Logo}
+                alt="Logo"
+                className="mt-3 rounded-circle resize mx-auto d-block"
+              />
+            ) : (
+              <img
+                src={displayGifImg}
+                alt="gif"
+                className="mt-3 rounded-circle resize mx-auto d-block"
+                height="150"
+                width="150"
+              />
+            )}
+
+            {gifs !== "" ? (
+              <GifModal
+                updateGifUrlDb={updateProfileGifUrlDb}
+                changeGifImg={setDisplayGifImg}
+                gifList={gifs}
+              />
+            ) : (
+              <p>Loading..</p>
+            )}
 
             <p>My Description (double click to edit):</p>
 
@@ -277,7 +361,7 @@ facade.updateUserDescription(userDescription).then((res) => {
                     multiple
                     onChange={setMultiSelections}
                     options={genres}
-                    placeholder="Update genres ..."
+                    placeholder="Add genres ..."
                     selected={multiSelections}
                   />
                   <button
@@ -297,7 +381,7 @@ facade.updateUserDescription(userDescription).then((res) => {
         </Row>
         {error && <ErrorToDisplay errorMsg={error} />}
         {success && <SuccesToDisplay msg={"Successfully added"} />}
-        {showPosts && <DisplayPosts posts={posts}/>}
+        {showPosts && <DisplayPosts posts={posts} />}
       </Container>
     </div>
   );

@@ -97,11 +97,24 @@ function apiFacade() {
       });
   };
 
+  const getTrendingGifs = () => {
+    const options = makeOptions("GET", true);
+     return fetch(localURL + "/api/giphy/getTrendingGifs", options)
+       .then(handleHttpErrors)
+  }
+
   const updateUserDescription = (description) => {
     const descriptionAsJson = {"description" : description}
     const options = makeOptions("PUT", true, descriptionAsJson);
     return fetch(localURL + "/api/info/updateProfile", options).then(handleHttpErrorsNoJson).then((res) => {} )
   };
+
+   const updateProfileGifUrl = (gifUrl) => {
+     const gifUrlAsJson = { gifUrl: gifUrl };
+     const options = makeOptions("PUT", true, gifUrlAsJson);
+     return fetch(localURL + "/api/giphy/updateProfileGifUrl", options)
+       .then(handleHttpErrorsNoJson)
+   };
 
   const addGenreToPerson = (username, genres) => {
    
@@ -135,6 +148,14 @@ function apiFacade() {
        handleHttpErrors
      );
   }
+
+   const getProfileGifUrlById = (username) => {
+     const options = makeOptions("GET");
+     return fetch(
+       localURL + "/api/giphy/profileGifUrl/" + username,
+       options
+     ).then(handleHttpErrors);
+   };
 
   const getAllPostsByUsername = (username) => {
     const options = makeOptions("GET");
@@ -204,6 +225,9 @@ function apiFacade() {
     registerUser,
     addPost,
     getAllPostsByUsername,
+    getTrendingGifs,
+    updateProfileGifUrl,
+    getProfileGifUrlById,
   };
 }
 const facade = apiFacade();
