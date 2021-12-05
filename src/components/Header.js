@@ -24,16 +24,21 @@ function Header({ loggedIn, logout, validateAccess }) {
 
           {validateAccess === "user" ? (
             <>
-            <li>
-              <NavLink exact activeClassName="active" to="/profile-site">
-                Profile Site
-              </NavLink>
-               </li>
-               <li>
-              <NavLink exact activeClassName="active" to="/shareSongs">
-                Share Songs
-              </NavLink>
-            </li>
+              <li>
+                <NavLink exact activeClassName="active" to="/profile-site">
+                  Profile Site
+                </NavLink>
+              </li>
+              <li>
+                <NavLink exact activeClassName="active" to="/shareSongs">
+                  Share Songs
+                </NavLink>
+              </li>
+              <li>
+                <NavLink exact activeClassName="active" to="/search-for-users">
+                  Search for Users
+                </NavLink>
+              </li>
             </>
           ) : (
             ""

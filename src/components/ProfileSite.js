@@ -64,6 +64,7 @@ facade
       .getProfileGifUrlById(facade.getUsername())
       .then((res) => {
         setDisplayGifImg(res.profileGifUrl);
+        console.log(res.profileGifUrl)
         //setGifFromServer();
       })
       .catch((err) => {
@@ -273,7 +274,7 @@ facade.updateUserDescription(userDescription).then((res) => {
             <h1 className="text-center mt-3">
               Welcome <strong>{username}</strong>
             </h1>
-            {displayGifImg === "" ? (
+            {displayGifImg === "No profile gif url yet." ? (
               <img
                 src={Logo}
                 alt="Logo"
@@ -382,6 +383,7 @@ facade.updateUserDescription(userDescription).then((res) => {
         {error && <ErrorToDisplay errorMsg={error} />}
         {success && <SuccesToDisplay msg={"Successfully added"} />}
         {showPosts && <DisplayPosts posts={posts} />}
+        
       </Container>
     </div>
   );

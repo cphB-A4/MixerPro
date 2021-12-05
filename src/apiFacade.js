@@ -157,6 +157,23 @@ function apiFacade() {
      ).then(handleHttpErrors);
    };
 
+     const getUsernameBySearching = (username) => {
+       const options = makeOptions("GET");
+       return fetch(
+         localURL + "/api/info/searchForUser/" + username,
+         options
+       ).then(handleHttpErrors);
+     };
+
+     const getUserInfo = (username) => {
+        const options = makeOptions("GET");
+        return fetch(
+          localURL + "/api/info/getUserInfo/" + username,
+          options
+        ).then(handleHttpErrors);
+     }
+     
+
   const getAllPostsByUsername = (username) => {
     const options = makeOptions("GET");
     return fetch(
@@ -228,6 +245,8 @@ function apiFacade() {
     getTrendingGifs,
     updateProfileGifUrl,
     getProfileGifUrlById,
+    getUsernameBySearching,
+    getUserInfo,
   };
 }
 const facade = apiFacade();

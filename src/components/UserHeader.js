@@ -9,6 +9,7 @@ import FetchParallelly from "./FetchParallelly";
 import NoMatch from "./NoMatch";
 import ProfileSite from "./ProfileSite";
 import ShareSongs from "./ShareSongs";
+import SearchForUsers from "./SearchForUsers";
 
 function UserHeader(props) {
   const { loggedIn, logout, validateAccess } = props;
@@ -28,7 +29,6 @@ function UserHeader(props) {
         <Route path="/profile-site">
           <ProfileSite />
         </Route>
-
         {/* Switch react doc: All children of a <Switch> should be <Route> or <Redirect> elements. Cannot be wrapped in <>..</> Should be fixed  */}
         {validateAccess === "user" ? (
           <Route path="/profileSite">
@@ -37,6 +37,14 @@ function UserHeader(props) {
         ) : (
           ""
         )}
+        {validateAccess === "user" ? (
+          <Route path="/search-for-users">
+            <SearchForUsers />
+          </Route>
+        ) : (
+          ""
+        )}
+
         {validateAccess === "user" ? (
           <Route path="/shareSongs">
             <ShareSongs />
