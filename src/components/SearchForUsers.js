@@ -59,7 +59,7 @@ setError('')
      facade
        .getUserInfo(selectedUser)
        .then((res) => {
-         console.log(res);
+      //   console.log(res);
          setSelectedUser('')
          setUserToBeDisplayed(res);
        })

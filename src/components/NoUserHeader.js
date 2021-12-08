@@ -41,8 +41,8 @@ const [showRegisterError, setShowRegisterError] = useState(false);
     evt.preventDefault();
     console.log(registerCredentials);
     facade.registerUser(registerCredentials).then((res) => {
-      console.log('success')
-      console.log(res)
+   //   console.log('success')
+     // console.log(res)
       login(registerCredentials.newUsername, registerCredentials.newPassword);//login after register
     }).catch((err) => {
            console.log(err);

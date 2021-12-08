@@ -64,7 +64,7 @@ facade
       .getProfileGifUrlById(facade.getUsername())
       .then((res) => {
         setDisplayGifImg(res.profileGifUrl);
-        console.log(res.profileGifUrl)
+      //  console.log(res.profileGifUrl)
         //setGifFromServer();
       })
       .catch((err) => {
@@ -151,26 +151,24 @@ setShowUserDescription(res.userDescription);
       });
 
     
-    axios(
-      `http://localhost:8080/Spotify_Backend_war_exploded/api/info/genres`
-    ).then((data) => {
-     
-      const options = data.data.map((genre) => ({ name: genre.name }));
-     
-      setGenres(options);
-    });
+    axios(`https://theagns.com/Spotify-Backend/api/info/genres`).then(
+      (data) => {
+        const options = data.data.map((genre) => ({ name: genre.name }));
+
+        setGenres(options);
+      }
+    );
 
     // setUserGenres(facade.getUsersFavouriteGenres(facade.getUsername))
     axios(
-      `http://localhost:8080/Spotify_Backend_war_exploded/api/info/userGenres/${facade.getUsername()}`
+      `https://theagns.com/Spotify-Backend/api/info/userGenres/${facade.getUsername()}`
     ).then((userGenres) => {
       //console.log(userGenres.data);
-      if(userGenres.data == null){
-setUserGenres([])
+      if (userGenres.data == null) {
+        setUserGenres([]);
       } else {
- setUserGenres(userGenres.data);
+        setUserGenres(userGenres.data);
       }
-     
     });
   }, []);
 

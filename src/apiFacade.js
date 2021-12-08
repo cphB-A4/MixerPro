@@ -1,6 +1,6 @@
 import jwt_decode from "jwt-decode";
-import { localURL } from "./Settings";
-//import { URL, localURL } from "./Settings";
+//import { localURL } from "./Settings";
+import { URL, localURL } from "./Settings";
 
 //URL = "https://www.theagns.com/CA2-Backend";
 function handleHttpErrors(res) {
@@ -50,24 +50,22 @@ function apiFacade() {
    const deleteGenreFromUser = (genre) => {
      const jsonGenre = {name: genre}
      const options = makeOptions("DELETE", true, jsonGenre);
-     return fetch(localURL + "/api/info/deleteGenreFromUser", options)
+     return fetch(URL + "/api/info/deleteGenreFromUser", options)
        .then(handleHttpErrors)
-       .then((res) => {
-        
-       });
+       .then((res) => {});
    };
 
    const registerUser = (registerCredentials) => {
      const options = makeOptions('POST',true,registerCredentials);
-     console.log(registerCredentials)
-     return fetch(localURL + "/api/info/register", options)
+    // console.log(registerCredentials)
+     return fetch(URL + "/api/info/register", options)
        .then(handleHttpErrorsNoJson)
        .then((res) => {});
    }
 
    const addPost = (post) => {
      const options = makeOptions('POST',true,post);
-     return fetch(localURL + "/api/post/add",options).then(handleHttpErrorsNoJson);
+     return fetch(URL + "/api/post/add", options).then(handleHttpErrorsNoJson);
    }
 
   //Decode token
@@ -90,37 +88,41 @@ function apiFacade() {
 
   const getUsersFavouriteGenres = (username) => {
     const options = makeOptions("GET", true);
-    return fetch(localURL + "api/info/userGenres/" + username, options)
+    return fetch(URL + "api/info/userGenres/" + username, options)
       .then(handleHttpErrors)
-      .then((res) => {
-        
-      });
+      .then((res) => {});
   };
 
   const getTrendingGifs = () => {
     const options = makeOptions("GET", true);
-     return fetch(localURL + "/api/giphy/getTrendingGifs", options)
-       .then(handleHttpErrors)
+     return fetch(URL + "/api/giphy/getTrendingGifs", options).then(
+       handleHttpErrors
+     );
   }
 
   const updateUserDescription = (description) => {
     const descriptionAsJson = {"description" : description}
     const options = makeOptions("PUT", true, descriptionAsJson);
-    return fetch(localURL + "/api/info/updateProfile", options).then(handleHttpErrorsNoJson).then((res) => {} )
+    return fetch(URL + "/api/info/updateProfile", options)
+      .then(handleHttpErrorsNoJson)
+      .then((res) => {});
   };
 
    const updateProfileGifUrl = (gifUrl) => {
      const gifUrlAsJson = { gifUrl: gifUrl };
      const options = makeOptions("PUT", true, gifUrlAsJson);
-     return fetch(localURL + "/api/giphy/updateProfileGifUrl", options)
-       .then(handleHttpErrorsNoJson)
+     return fetch(URL + "/api/giphy/updateProfileGifUrl", options).then(
+       handleHttpErrorsNoJson
+     );
    };
 
   const addGenreToPerson = (username, genres) => {
    
     const options = makeOptions("PUT", true, genres);
    
-    return fetch(localURL + "/api/info/" + username, options).then(handleHttpErrorsNoJson)
+    return fetch(URL + "/api/info/" + username, options).then(
+      handleHttpErrorsNoJson
+    );
       
   };
 
@@ -131,7 +133,7 @@ function apiFacade() {
       password: password,
     });
    
-    return fetch(localURL + "/api/login", options)
+    return fetch(URL + "/api/login", options)
       .then(handleHttpErrors)
       .then((res) => {
         setToken(res.token);
@@ -139,66 +141,59 @@ function apiFacade() {
   };
   const fetchData = () => {
     const options = makeOptions("GET", true); //True add's the token
-    return fetch(localURL + "/api/info/user", options).then(handleHttpErrors);
+    return fetch(URL + "/api/info/user", options).then(handleHttpErrors);
   };
 
   const getUsersDescriptionById = (username) => {
     const options = makeOptions("GET");
-     return fetch(localURL + "/api/info/userDescription/" + username, options).then(
+     return fetch(URL + "/api/info/userDescription/" + username, options).then(
        handleHttpErrors
      );
   }
 
    const getProfileGifUrlById = (username) => {
      const options = makeOptions("GET");
-     return fetch(
-       localURL + "/api/giphy/profileGifUrl/" + username,
-       options
-     ).then(handleHttpErrors);
+     return fetch(URL + "/api/giphy/profileGifUrl/" + username, options).then(
+       handleHttpErrors
+     );
    };
 
      const getUsernameBySearching = (username) => {
        const options = makeOptions("GET");
-       return fetch(
-         localURL + "/api/info/searchForUser/" + username,
-         options
-       ).then(handleHttpErrors);
+       return fetch(URL + "/api/info/searchForUser/" + username, options).then(
+         handleHttpErrors
+       );
      };
 
      const getUserInfo = (username) => {
         const options = makeOptions("GET");
-        return fetch(
-          localURL + "/api/info/getUserInfo/" + username,
-          options
-        ).then(handleHttpErrors);
+        return fetch(URL + "/api/info/getUserInfo/" + username, options).then(
+          handleHttpErrors
+        );
      }
      
 
   const getAllPostsByUsername = (username) => {
     const options = makeOptions("GET");
     return fetch(
-      localURL + "/api/post/getAllPostsByUsername/" + username,
+      URL + "/api/post/getAllPostsByUsername/" + username,
       options
     ).then(handleHttpErrors);
   };
   //Fetches from one endpoint. Only 1 external api call.
   const fetchSingleData = () => {
     const options = makeOptions("GET", true); //True add's the token
-    return fetch(localURL + "/api/info/fetchSingle", options).then(
-      handleHttpErrors
-    );
+    return fetch(URL + "/api/info/fetchSingle", options).then(handleHttpErrors);
   };
   //Fetches from one endpoint. 4 external api call.
   const fetchAlotData = () => {
     const options = makeOptions("GET", true); //True add's the token
-    return fetch(localURL + "/api/info/fetchSeq", options).then(
-      handleHttpErrors
-    );
+    return fetch(URL + "/api/info/fetchSeq", options).then(handleHttpErrors);
   };
 
   const fetchAlotDataParallel = () => {
     const options = makeOptions("GET", true); //True add's the token
-    return fetch(localURL + "/api/info/fetchParallel", options).then(
+    return fetch(URL + "/api/info/fetchParallel", options).then(
       handleHttpErrors
     );
   };

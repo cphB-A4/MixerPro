@@ -18,7 +18,7 @@ function DisplayUsersInTable({ userList, setUserState, setUsers }) {
                     className="btn btn-black"
                     onClick={() => {
                       setUserState(user);
-                      setUsers('')
+                      setUsers("");
                     }}
                   >
                     {user}
