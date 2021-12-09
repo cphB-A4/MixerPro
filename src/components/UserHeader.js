@@ -5,7 +5,6 @@ import {
 
 import Header from "./Header";
 import Home from "./Home";
-import FetchParallelly from "./FetchParallelly";
 import NoMatch from "./NoMatch";
 import ProfileSite from "./ProfileSite";
 import ShareSongs from "./ShareSongs";
@@ -54,7 +53,7 @@ function UserHeader(props) {
         )}
         {validateAccess === "admin" ? (
           <Route path="/fetch-parallelly">
-            <FetchParallelly />
+           
           </Route>
         ) : (
           ""
