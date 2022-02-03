@@ -151,17 +151,17 @@ setShowUserDescription(res.userDescription);
       });
 
     
-    axios(`https://theagns.com/Spotify-Backend/api/info/genres`).then(
-      (data) => {
-        const options = data.data.map((genre) => ({ name: genre.name }));
+    axios(
+      `https://www.theagns.com/tomcat/Spotify-Backend/api/info/genres`
+    ).then((data) => {
+      const options = data.data.map((genre) => ({ name: genre.name }));
 
-        setGenres(options);
-      }
-    );
+      setGenres(options);
+    });
 
     // setUserGenres(facade.getUsersFavouriteGenres(facade.getUsername))
     axios(
-      `https://theagns.com/Spotify-Backend/api/info/userGenres/${facade.getUsername()}`
+      `https://www.theagns.com/tomcat/Spotify-Backend/api/info/userGenres/${facade.getUsername()}`
     ).then((userGenres) => {
       //console.log(userGenres.data);
       if (userGenres.data == null) {
